@@ -1,0 +1,1 @@
+export const imgLogoZeosVan = require("../assets/img/logo-zeos-van.png")

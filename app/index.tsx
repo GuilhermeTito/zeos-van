@@ -1,8 +1,15 @@
 import { SafeAreaView } from "react-native-safe-area-context"
 import { Text, Image, View } from "react-native"
+import { useState } from "react"
 import { BotaoLink } from "../components/Botao"
+import { imgLogoZeosVan } from "../assets/imagens"
+import { verificarAccessToken } from "../controllers"
 
 export default function Index() {
+    const [linkPagina, setLinkPagina] = useState("")
+
+    verificarAccessToken(setLinkPagina)
+
     return (
         <SafeAreaView style={{
             flex: 1,
@@ -20,7 +27,7 @@ export default function Index() {
                         resizeMode: "contain",
                         alignSelf: "center"
                     }}
-                    source={require("../assets/img/logo-zeos-van.png")}
+                    source={imgLogoZeosVan}
                 />
             </View>            
             <View style={{
@@ -34,7 +41,7 @@ export default function Index() {
                 </Text>
                 <BotaoLink
                     title="Iniciar"
-                    href=""
+                    href={linkPagina}
                 />
             </View>
             <View style={{
@@ -44,7 +51,7 @@ export default function Index() {
                 alignItems: "center"
             }}>
                 <Text style={{ fontSize: 12 }}>
-                    zeos-van@0.2.0
+                    zeos-van@0.3.0
                 </Text>
             </View>
         </SafeAreaView>

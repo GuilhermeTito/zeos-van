@@ -5,7 +5,6 @@ const estilo = StyleSheet.create({
     botao: {
         alignItems: 'center',
         justifyContent: 'center',
-        width: "30%",
         paddingVertical: 10,
         paddingHorizontal: 30,
         borderRadius: 5,
@@ -47,7 +46,7 @@ export function BotaoLink(props: PropsBotaoLink) {
     if (style == null) style = estilo.botao
 
     return (
-        <Link href={href}>
+        <Link href={href} asChild>
             <Pressable style={style} onPress={onPress}>
                 <Text style={titleStyle}>{title}</Text>
             </Pressable>
