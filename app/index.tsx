@@ -4,8 +4,11 @@ import { useState } from "react"
 import { BotaoLink } from "../components/Botao"
 import { imgLogoZeosVan } from "../assets/imagens"
 import { verificarAccessToken } from "../controllers"
+//import AsyncStorage from "@react-native-async-storage/async-storage"
 
 export default function Index() {
+    //AsyncStorage.setItem("accessToken", "")
+    
     const [linkPagina, setLinkPagina] = useState("")
 
     verificarAccessToken(setLinkPagina)
