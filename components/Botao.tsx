@@ -1,16 +1,8 @@
 import { Pressable, StyleSheet, GestureResponderEvent, Text, StyleProp, TextStyle, ViewStyle } from "react-native"
 import { Link } from "expo-router"
+import estiloPadrao from "../styles/padrao"
 
-const estilo = StyleSheet.create({
-    botao: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingVertical: 10,
-        paddingHorizontal: 30,
-        borderRadius: 5,
-        elevation: 5,
-        backgroundColor: "#FFD000"
-    },
+const estiloTexto = StyleSheet.create({
     texto: {
         fontSize: 24,
         color: "black"
@@ -27,8 +19,8 @@ type PropsBotao = {
 export function Botao(props: PropsBotao) {
     let { title, titleStyle, style, onPress } = props
 
-    if (titleStyle == null) titleStyle = estilo.texto
-    if (style == null) style = estilo.botao
+    if (titleStyle == null) titleStyle = estiloTexto.texto
+    if (style == null) style = estiloPadrao.botao
 
     return (
         <Pressable style={style} onPress={onPress}>
@@ -42,8 +34,8 @@ type PropsBotaoLink = PropsBotao & { href: string }
 export function BotaoLink(props: PropsBotaoLink) {
     let { title, titleStyle, style, onPress, href } = props
     
-    if (titleStyle == null) titleStyle = estilo.texto
-    if (style == null) style = estilo.botao
+    if (titleStyle == null) titleStyle = estiloTexto.texto
+    if (style == null) style = estiloPadrao.botao
 
     return (
         <Link href={href} asChild>
