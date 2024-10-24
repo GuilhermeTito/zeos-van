@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, GestureResponderEvent, Text, StyleProp, TextStyle, ViewStyle, TouchableOpacity } from "react-native"
+import { StyleSheet, GestureResponderEvent, Text, StyleProp, TextStyle, ViewStyle, TouchableOpacity } from "react-native"
 import { Link } from "expo-router"
 import estiloPadrao from "../styles/padrao"
 import { PropsWithChildren } from "react"
@@ -29,9 +29,9 @@ export function Botao(props: PropsBotao) {
     if (style == null) style = estiloPadrao.botao
 
     return (
-        <Pressable style={style} onPress={onPress}>
+        <TouchableOpacity style={style} onPress={onPress}>
             <Text style={titleStyle}>{title}</Text>
-        </Pressable>
+        </TouchableOpacity>
     )
 }
 
@@ -45,10 +45,10 @@ export function BotaoLink(props: PropsBotaoLink) {
 
     return (
         <Link href={href} asChild>
-            <Pressable style={style} onPress={onPress}>
+            <TouchableOpacity style={style} onPress={onPress}>
                 <Text style={titleStyle}>{title}</Text>
-            </Pressable>
-        </Link>   
+            </TouchableOpacity>
+        </Link>
     )
 }
 
