@@ -36,3 +36,7 @@ yarn-error.*
 
 # dotenv
 .env
+
+# build
+/android
+/ios
