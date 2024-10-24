@@ -3,7 +3,7 @@ import { Text, Image, View } from "react-native"
 import { BotaoLink } from "../../components/Botao"
 import { imgLogoZeosVan } from "../../assets/imagens"
 
-export default function IndexLogin() {
+export default function IndexCadastro() {
 
     return (
         <SafeAreaView style={{
