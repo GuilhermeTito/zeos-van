@@ -1,10 +1,10 @@
 import { SafeAreaView } from "react-native-safe-area-context"
 import { Text } from "react-native"
 
-export default function IndexPassageiro(){
+export default function ConfiguraçõesMotorista(){
     return (
         <SafeAreaView>
-            <Text>Index Motorista</Text>
+            <Text>Configurações</Text>
         </SafeAreaView>
     )
 }

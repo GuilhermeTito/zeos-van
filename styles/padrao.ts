@@ -11,6 +11,13 @@ const estiloPadrao = StyleSheet.create({
         backgroundColor: "#FFD000",
         margin: 10
     },
+    botaoComIcone: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#FFD000',
+        padding: 10,
+        borderRadius: 8,
+    },
     input: {
         height: 40,
         width: "90%",
