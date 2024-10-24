@@ -58,7 +58,7 @@ export default function Index() {
                 alignItems: "center"
             }}>
                 <Text style={{ fontSize: 12 }}>
-                    zeos-van@0.5.6
+                    zeos-van@0.6.0
                 </Text>
             </View>
         </SafeAreaView>

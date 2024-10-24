@@ -67,3 +67,21 @@ export function BotaoComIcone(props: PropsBotaoComIcone) {
         </TouchableOpacity>
     )
 }
+
+type PropsBotaoLinkComIcone = PropsBotaoLink & PropsWithChildren
+
+export function BotaoLinkComIcone(props: PropsBotaoLinkComIcone) {
+    let { title, titleStyle, style, onPress, href } = props
+
+    if (titleStyle == null) titleStyle = estiloTexto.textoBotaoComIcone
+    if (style == null) style = estiloPadrao.botaoComIcone
+
+    return (
+        <Link href={href} asChild>
+            <TouchableOpacity style={style} onPress={onPress}>
+                {props.children}
+                <Text style={titleStyle}>{title}</Text>
+            </TouchableOpacity>
+        </Link>
+    )
+}
