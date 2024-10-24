@@ -14,8 +14,11 @@ const estiloPadrao = StyleSheet.create({
     input: {
         height: 40,
         width: "90%",
+        borderColor: '#ccc',
         borderWidth: 1,
-        padding: 10
+        padding: 10,
+        borderRadius: 4,
+        marginBottom: 12
     }
 })
 

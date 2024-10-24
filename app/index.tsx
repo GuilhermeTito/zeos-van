@@ -43,8 +43,12 @@ export default function Index() {
                     Bem vindo(a)!
                 </Text>
                 <BotaoLink
-                    title="Iniciar"
+                    title="Entrar"
                     href={linkPagina}
+                />
+                <BotaoLink
+                    title="Criar conta"
+                    href="cadastro"
                 />
             </View>
             <View style={{
