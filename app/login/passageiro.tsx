@@ -9,7 +9,6 @@ import { login } from "../../controllers/login"
 export default function LoginMotorista() {
     const [email, setEmail] = useState("")
     const [senha, setSenha] = useState("")
-    const [msgErroLogin, setMsgErroLogin] = useState("")
     
     return (
         <SafeAreaView style={{
@@ -42,28 +41,29 @@ export default function LoginMotorista() {
                     fontSize: 24,
                     marginBottom: "10%"
                 }}>
-                    Passageiro
+                    Login como Passageiro
                 </Text>
-                <Text style={{ fontSize: 24 }}>E-mail</Text>
+
                 <TextInput
                     style={estiloPadrao.input}
+                    placeholder="E-mail"
+                    value={email}
                     onChangeText={setEmail}
+                    keyboardType="email-address"
                 />
-                <Text style={{ fontSize: 24 }}>Senha</Text>
+
                 <TextInput
                     style={estiloPadrao.input}
+                    placeholder="Senha"
+                    value={senha}
                     onChangeText={setSenha}
+                    secureTextEntry
                 />
+
                 <Botao
                     title="Entrar"
-                    onPress={() => login("passageiro", email, senha, setMsgErroLogin)}
+                    onPress={() => login("passageiro", email, senha)}
                 />
-                <Text style={{
-                    fontSize: 24,
-                    color: "red",
-                    marginTop: "10%"
-                }}
-                >{msgErroLogin}</Text>
             </View>
         </SafeAreaView>
     )
