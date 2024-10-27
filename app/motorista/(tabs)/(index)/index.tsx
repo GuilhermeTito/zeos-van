@@ -1,5 +1,5 @@
 import { SafeAreaView } from "react-native-safe-area-context"
-import { BotaoComIcone, BotaoLinkComIcone } from "../../../components/Botao"
+import { BotaoComIcone, BotaoLinkComIcone } from "../../../../components/Botao"
 import FontAwesome from "@expo/vector-icons/FontAwesome"
 
 export default function IndexMotorista(){
