@@ -3,7 +3,10 @@ import { Tabs } from 'expo-router'
 
 export default function TabLayoutMotorista() {
 return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: 'blue' }}>
+    <Tabs screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: "brown"
+    }}>
         <Tabs.Screen
             name="(index)"
             options={{
