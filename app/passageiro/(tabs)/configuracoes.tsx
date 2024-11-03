@@ -4,10 +4,11 @@ import { Botao } from "../../../components/Botao"
 import logout from "../../../controllers/logout"
 import estiloPadrao from "../../../styles/padrao"
 import React, { useState } from "react"
-import { preencherDadosPassageiro } from "../../../controllers/passageiro"
+import { preencherDadosPassageiro, gravarAlteracoesPassageiro } from "../../../controllers/passageiro"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 
 export default function ConfiguracoesPassageiro(){
+    const [paginaJaCarregada, setPaginaJaCarregada] = useState(false)
     const [id, setId] = useState(0)
     const [nome, setNome] = useState("")
     const [email, setEmail] = useState("")
@@ -17,18 +18,21 @@ export default function ConfiguracoesPassageiro(){
     const [pontoChegada, setPontoChegada] = useState("")
     const [horarioChegada, setHorarioChegada] = useState("")
 
-    preencherDadosPassageiro(
-        AsyncStorage.getItem("accessToken"),
-        setId,
-        setNome,
-        setEmail,
-        setTelefone,
-        setPontoPartida,
-        setHorarioPartida,
-        setPontoChegada,
-        setHorarioChegada
-    )
-
+    if(!paginaJaCarregada){
+        preencherDadosPassageiro(
+            AsyncStorage.getItem("accessToken"),
+            setId,
+            setNome,
+            setEmail,
+            setTelefone,
+            setPontoPartida,
+            setHorarioPartida,
+            setPontoChegada,
+            setHorarioChegada
+        )
+        setPaginaJaCarregada(true)
+    }
+    
     return (
         <SafeAreaView style={{
             flex: 1
@@ -72,7 +76,6 @@ export default function ConfiguracoesPassageiro(){
                     placeholder="Ponto de partida"
                     value={pontoPartida}
                     onChangeText={setPontoPartida}
-                    keyboardType="phone-pad"
                 />
                 <Text>Horário de partida</Text>
                 <TextInput
@@ -80,7 +83,6 @@ export default function ConfiguracoesPassageiro(){
                     placeholder="Horário de partida"
                     value={horarioPartida}
                     onChangeText={setHorarioPartida}
-                    keyboardType="phone-pad"
                 />
                 <Text>Ponto de chegada</Text>
                 <TextInput
@@ -88,7 +90,6 @@ export default function ConfiguracoesPassageiro(){
                     placeholder="Ponto de chegada"
                     value={pontoChegada}
                     onChangeText={setPontoChegada}
-                    keyboardType="phone-pad"
                 />
                 <Text>Horário de chegada</Text>
                 <TextInput
@@ -96,14 +97,21 @@ export default function ConfiguracoesPassageiro(){
                     placeholder="Horário de chegada"
                     value={horarioChegada}
                     onChangeText={setHorarioChegada}
-                    keyboardType="phone-pad"
                 />
                 <View style={{
                     justifyContent: "center",
                     alignItems: "center",
                     width: "100%"
                 }}>
-                    <Botao title="Salvar"/>
+                    <Botao title="Salvar" onPress={() => gravarAlteracoesPassageiro(
+                        AsyncStorage.getItem("accessToken"),
+                        nome,
+                        telefone,
+                        pontoPartida,
+                        horarioPartida,
+                        pontoChegada,
+                        horarioChegada,
+                    )}/>
                     <Botao title="Sair" onPress={() => logout()}/>
                 </View>
             </View>
