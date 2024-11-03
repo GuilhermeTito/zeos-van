@@ -13,7 +13,7 @@ export async function login(tipoUsuario: string, email: string, senha: string) {
 
     AsyncStorage.setItem("accessToken", retornoToken.accessToken)
 
-    const dadosUsuario = await validarAccessToken(retornoToken.accessToken)
+    const dadosUsuario = await validarAccessToken(AsyncStorage.getItem("accessToken"))
 
     if (dadosUsuario == null){
         Alert.alert("Aviso", "Erro ao validar token.")

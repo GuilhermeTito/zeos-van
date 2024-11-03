@@ -9,7 +9,9 @@ export type RetornoToken = {
     accessToken: string
 }
 
-export async function validarAccessToken(accessToken: string | null): Promise<DadosUsuario | null> {    
+export async function validarAccessToken(accessTokenPromise: Promise<string | null>): Promise<DadosUsuario | null> {    
+    const accessToken = await accessTokenPromise
+    
     if(accessToken == null || accessToken == ""){
         return null
     }

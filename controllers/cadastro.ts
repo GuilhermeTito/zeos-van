@@ -1,6 +1,6 @@
 import { Alert } from "react-native"
-import cadastrarMotorista from "../models/motorista"
-import cadastrarPassageiro from "../models/passageiro"
+import { cadastrarMotorista } from "../models/motorista"
+import { cadastrarPassageiro } from "../models/passageiro"
 import { router } from "expo-router"
 
 export default async function cadastro(tipoUsuario: string, nome: string, email: string, telefone: string, senha: string) {    

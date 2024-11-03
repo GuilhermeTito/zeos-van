@@ -1,6 +1,6 @@
 import { SafeAreaView } from "react-native-safe-area-context"
 import { Text, Image, View } from "react-native"
-import { useState } from "react"
+import React, { useState } from "react"
 import { BotaoLink } from "../components/Botao"
 import { imgLogoZeosVan } from "../assets/imagens"
 import { verificarAccessToken } from "../controllers"
@@ -58,7 +58,7 @@ export default function Index() {
                 alignItems: "center"
             }}>
                 <Text style={{ fontSize: 12 }}>
-                    zeos-van@0.7.0
+                    zeos-van@0.8.0
                 </Text>
             </View>
         </SafeAreaView>
