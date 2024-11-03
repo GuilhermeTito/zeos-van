@@ -12,13 +12,21 @@ export default function ConfiguracoesPassageiro(){
     const [nome, setNome] = useState("")
     const [email, setEmail] = useState("")
     const [telefone, setTelefone] = useState("")
+    const [pontoPartida, setPontoPartida] = useState("")
+    const [horarioPartida, setHorarioPartida] = useState("")
+    const [pontoChegada, setPontoChegada] = useState("")
+    const [horarioChegada, setHorarioChegada] = useState("")
 
     preencherDadosPassageiro(
         AsyncStorage.getItem("accessToken"),
         setId,
         setNome,
         setEmail,
-        setTelefone
+        setTelefone,
+        setPontoPartida,
+        setHorarioPartida,
+        setPontoChegada,
+        setHorarioChegada
     )
 
     return (
@@ -26,62 +34,78 @@ export default function ConfiguracoesPassageiro(){
             flex: 1
         }}>
             <View style={{
-                flex: 3,
+                flex: 1,
                 flexDirection: "column",
-                justifyContent: "flex-start",
-                alignItems: "center",
-                width: "100%"
+                justifyContent: "space-between",
+                alignItems: "flex-start",
+                width: "100%",
+                paddingLeft: "5%"
             }}>
+                <Text>Id de passageiro: {id}</Text>
+                <Text>Nome</Text>
+                <TextInput
+                    style={estiloPadrao.input}
+                    placeholder="Nome"
+                    value={nome}
+                    onChangeText={setNome}
+                />
+                <Text>E-mail</Text>
+                <TextInput
+                    style={estiloPadrao.input}
+                    placeholder="E-mail"
+                    value={email}
+                    onChangeText={setEmail}
+                    keyboardType="email-address"
+                    editable={false}
+                />
+                <Text>Telefone</Text>
+                <TextInput
+                    style={estiloPadrao.input}
+                    placeholder="Telefone"
+                    value={telefone}
+                    onChangeText={setTelefone}
+                    keyboardType="phone-pad"
+                />
+                <Text>Ponto de partida</Text>
+                <TextInput
+                    style={estiloPadrao.input}
+                    placeholder="Ponto de partida"
+                    value={pontoPartida}
+                    onChangeText={setPontoPartida}
+                    keyboardType="phone-pad"
+                />
+                <Text>Horário de partida</Text>
+                <TextInput
+                    style={estiloPadrao.input}
+                    placeholder="Horário de partida"
+                    value={horarioPartida}
+                    onChangeText={setHorarioPartida}
+                    keyboardType="phone-pad"
+                />
+                <Text>Ponto de chegada</Text>
+                <TextInput
+                    style={estiloPadrao.input}
+                    placeholder="Ponto de chegada"
+                    value={pontoChegada}
+                    onChangeText={setPontoChegada}
+                    keyboardType="phone-pad"
+                />
+                <Text>Horário de chegada</Text>
+                <TextInput
+                    style={estiloPadrao.input}
+                    placeholder="Horário de chegada"
+                    value={horarioChegada}
+                    onChangeText={setHorarioChegada}
+                    keyboardType="phone-pad"
+                />
                 <View style={{
-                    flex: 1,
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    alignItems: "flex-start",
-                    width: "100%",
-                    paddingLeft: "5%"
-                }}>
-                    <Text>Id de motorista: {id}</Text>
-                    <Text>Nome</Text>
-                    <TextInput
-                        style={estiloPadrao.input}
-                        placeholder="Nome"
-                        value={nome}
-                        onChangeText={setNome}
-                    />
-                    <Text>E-mail</Text>
-                    <TextInput
-                        style={estiloPadrao.input}
-                        placeholder="E-mail"
-                        value={email}
-                        onChangeText={setEmail}
-                        keyboardType="email-address"
-                    />
-                    <Text>Telefone</Text>
-                    <TextInput
-                        style={estiloPadrao.input}
-                        placeholder="Telefone"
-                        value={telefone}
-                        onChangeText={setTelefone}
-                        keyboardType="phone-pad"
-                    />
-                </View>
-                <View style={{
-                    flex: 1,
-                    flexDirection: "column",
-                    justifyContent: "flex-start",
+                    justifyContent: "center",
                     alignItems: "center",
                     width: "100%"
                 }}>
                     <Botao title="Salvar"/>
+                    <Botao title="Sair" onPress={() => logout()}/>
                 </View>
-            </View>
-            <View style={{
-                flex: 1,
-                flexDirection: "column",
-                justifyContent: "flex-end",
-                alignItems: "center"
-            }}>
-                <Botao title="Sair" onPress={() => logout()}/>
             </View>
         </SafeAreaView>
     )

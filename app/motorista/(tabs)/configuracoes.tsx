@@ -55,6 +55,7 @@ export default function ConfiguracoesMotorista(){
                         value={email}
                         onChangeText={setEmail}
                         keyboardType="email-address"
+                        editable={false}
                     />
                     <Text>Telefone</Text>
                     <TextInput
