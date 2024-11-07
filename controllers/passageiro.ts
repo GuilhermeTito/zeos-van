@@ -56,11 +56,11 @@ export async function gravarAlteracoesPassageiro(
         dadosUsuario.id,
         nome,
         telefone,
-        localPartida.results[0].formatted_address,
+        ponto_partida_padrao,
         localPartida.results[0].geometry.location.lat,
         localPartida.results[0].geometry.location.lng,
         horario_partida_padrao,
-        localChegada.results[0].formatted_address,
+        ponto_chegada_padrao,
         localChegada.results[0].geometry.location.lat,
         localChegada.results[0].geometry.location.lng,
         horario_chegada_padrao

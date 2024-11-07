@@ -38,11 +38,11 @@ export async function gravarViagemMarcada(
         sucesso = await cadastrarViagemMarcada(
             dadosUsuario.id,
             data_viagem,
-            localPartida.results[0].formatted_address,
+            ponto_partida,
             localPartida.results[0].geometry.location.lat,
             localPartida.results[0].geometry.location.lng,
             horario_partida,
-            localChegada.results[0].formatted_address,
+            ponto_chegada,
             localChegada.results[0].geometry.location.lat,
             localChegada.results[0].geometry.location.lng,
             horario_chegada
@@ -51,11 +51,11 @@ export async function gravarViagemMarcada(
         sucesso = await atualizarViagemMarcada(
             dadosUsuario.id,
             data_viagem,
-            localPartida.results[0].formatted_address,
+            ponto_partida,
             localPartida.results[0].geometry.location.lat,
             localPartida.results[0].geometry.location.lng,
             horario_partida,
-            localChegada.results[0].formatted_address,
+            ponto_chegada,
             localChegada.results[0].geometry.location.lat,
             localChegada.results[0].geometry.location.lng,
             horario_chegada
