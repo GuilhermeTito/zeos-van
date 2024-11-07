@@ -68,7 +68,7 @@ export async function atualizarPassageiro(
     latitude_chegada_padrao: string,
     longitude_chegada_padrao: string,
     horario_chegada_padrao: string
-): Promise<Boolean> {
+): Promise<boolean> {
     const reqURL = new URL(process.env.EXPO_PUBLIC_API_URL + "passageiro")
     
     const queryParams = { id: id }

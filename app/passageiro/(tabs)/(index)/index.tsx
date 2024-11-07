@@ -1,5 +1,5 @@
 import { SafeAreaView } from "react-native-safe-area-context"
-import { BotaoComIcone, BotaoLinkComIcone } from "../../../../components/Botao"
+import { BotaoLinkComIcone } from "../../../../components/Botao"
 import FontAwesome from "@expo/vector-icons/FontAwesome"
 
 export default function IndexPassageiro(){
@@ -10,9 +10,9 @@ export default function IndexPassageiro(){
             justifyContent: "space-around",
             alignItems: "center"
         }}>
-            <BotaoComIcone title="Marcar viagem">
+            <BotaoLinkComIcone title="Marcar Viagem" href="passageiro/marcar-viagem">
                 <FontAwesome name={"calendar"} size={36} color="black"/>
-            </BotaoComIcone>
+            </BotaoLinkComIcone>
         </SafeAreaView>
     )
 }
