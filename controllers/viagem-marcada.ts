@@ -1,3 +1,4 @@
+import { router } from "expo-router"
 import { validarAccessToken } from "../models/auth"
 import { buscarLugar } from "../models/google"
 import { atualizarViagemMarcada, buscarViagemMarcada, cadastrarViagemMarcada } from "../models/viagem-marcada"
@@ -64,6 +65,7 @@ export async function gravarViagemMarcada(
 
     if(sucesso){
         Alert.alert("Sucesso", "Gravado com sucesso!")
+        router.back()
     } else {
         Alert.alert("Erro", "Erro ao gravar.")
     }
