@@ -1,8 +1,21 @@
 import { router } from "expo-router"
 import { validarAccessToken } from "../models/auth"
 import { buscarLugar } from "../models/google"
-import { atualizarViagemMarcada, buscarViagemMarcada, cadastrarViagemMarcada } from "../models/viagem-marcada"
-import { Alert } from "react-native"
+import { atualizarViagemMarcada, buscarTodasAsViagensMarcadas, buscarViagemMarcada, cadastrarViagemMarcada } from "../models/viagem-marcada"
+import { Alert, Text } from "react-native"
+import React from "react"
+
+export async function buscarViagensMarcadas(accessToken: Promise<string | null>, setViagensMarcadas: React.Dispatch<React.SetStateAction<{data_viagem: string}[]>>){
+    const dadosUsuario = await validarAccessToken(accessToken)
+    
+    if(dadosUsuario == null){
+        return
+    }
+    
+    const arrayDeViagens = await buscarTodasAsViagensMarcadas(dadosUsuario.id)
+
+    setViagensMarcadas(arrayDeViagens)
+}
 
 export async function gravarViagemMarcada(
     accessToken: Promise<string | null>,

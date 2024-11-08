@@ -1,9 +1,41 @@
 export async function buscarViagemMarcada(id_passageiro: number, data_viagem: string) {
-    const reqURL = new URL(process.env.EXPO_PUBLIC_API_URL + "viagem-marcada")
+    const reqURL = new URL(process.env.EXPO_PUBLIC_API_URL + "viagem-marcada/all")
     
     const queryParams = {
         id_passageiro: id_passageiro,
         data_viagem: data_viagem
+    }
+    
+    Object.keys(queryParams).forEach(key => reqURL.searchParams.append(key, queryParams[key]))
+
+    const reqHeaders = new Headers({
+        Accept: "application/json",
+        "Content-Type": "application/json"
+    })
+    
+    const req = new Request(
+        reqURL,
+        {
+            method: "GET",
+            headers: reqHeaders
+        }
+    )
+
+    const res = await fetch(req)
+
+    try {
+        return await res.json()
+    } catch (error) {
+        console.log(error)
+        return
+    }
+}
+
+export async function buscarTodasAsViagensMarcadas(id_passageiro: number) {
+    const reqURL = new URL(process.env.EXPO_PUBLIC_API_URL + "viagem-marcada/todas")
+    
+    const queryParams = {
+        id_passageiro: id_passageiro
     }
     
     Object.keys(queryParams).forEach(key => reqURL.searchParams.append(key, queryParams[key]))
