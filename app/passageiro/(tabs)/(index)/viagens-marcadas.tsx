@@ -3,16 +3,21 @@ import { FlatList, Text } from "react-native"
 import React, { useState } from "react"
 import { buscarViagensMarcadas } from "../../../../controllers/viagem-marcada"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { Botao, BotaoLink } from "../../../../components/Botao"
 
 export default function ViagensMarcadas() {
-    const [viagensMarcadas, setViagensMarcadas] = useState([{data_viagem: "Vazio"}])
+    const [viagensMarcadas, setViagensMarcadas] = useState([{id: 0, data_viagem: "Vazio"}])
     buscarViagensMarcadas(AsyncStorage.getItem("accessToken"), setViagensMarcadas)
 
     return (
         <SafeAreaView>
             <FlatList
                 data={viagensMarcadas}
-                renderItem={({item}) => <Text>{item.data_viagem}</Text>}
+                renderItem={({item}) => {
+                    return (
+                        <BotaoLink title={item.data_viagem} href={"passageiro/" + item.id}/>
+                    )
+                }}
             >
             </FlatList>
         </SafeAreaView>

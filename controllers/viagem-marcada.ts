@@ -1,11 +1,32 @@
 import { router } from "expo-router"
 import { validarAccessToken } from "../models/auth"
 import { buscarLugar } from "../models/google"
-import { atualizarViagemMarcada, buscarTodasAsViagensMarcadas, buscarViagemMarcada, cadastrarViagemMarcada } from "../models/viagem-marcada"
-import { Alert, Text } from "react-native"
+import { atualizarViagemMarcada, buscarTodasAsViagensMarcadas, buscarViagemMarcada, buscarViagemMarcadaPorId, cadastrarViagemMarcada } from "../models/viagem-marcada"
+import { Alert } from "react-native"
 import React from "react"
 
-export async function buscarViagensMarcadas(accessToken: Promise<string | null>, setViagensMarcadas: React.Dispatch<React.SetStateAction<{data_viagem: string}[]>>){
+export async function preencherDadosViagem(
+    id: string,
+    setDataViagem: React.Dispatch<React.SetStateAction<string>>,
+    setPontoPartida: React.Dispatch<React.SetStateAction<string>>,
+    setHorarioPartida: React.Dispatch<React.SetStateAction<string>>,
+    setPontoChegada: React.Dispatch<React.SetStateAction<string>>,
+    setHorarioChegada: React.Dispatch<React.SetStateAction<string>>
+) {
+    const viagemMarcada = await buscarViagemMarcadaPorId(id)
+
+    if(viagemMarcada == null){
+        return
+    }
+
+    setDataViagem(viagemMarcada.data_viagem)
+    setPontoPartida(viagemMarcada.ponto_partida)
+    setHorarioPartida(viagemMarcada.horario_partida)
+    setPontoChegada(viagemMarcada.ponto_chegada)
+    setHorarioChegada(viagemMarcada.horario_chegada)
+}
+
+export async function buscarViagensMarcadas(accessToken: Promise<string | null>, setViagensMarcadas: React.Dispatch<React.SetStateAction<{id: number, data_viagem: string}[]>>){
     const dadosUsuario = await validarAccessToken(accessToken)
     
     if(dadosUsuario == null){
@@ -14,7 +35,11 @@ export async function buscarViagensMarcadas(accessToken: Promise<string | null>,
     
     const arrayDeViagens = await buscarTodasAsViagensMarcadas(dadosUsuario.id)
 
-    setViagensMarcadas(arrayDeViagens)
+    if(arrayDeViagens == null){
+        setViagensMarcadas([{id: 0, data_viagem: "Vazio"}])
+    } else {
+        setViagensMarcadas(arrayDeViagens)
+    }
 }
 
 export async function gravarViagemMarcada(
