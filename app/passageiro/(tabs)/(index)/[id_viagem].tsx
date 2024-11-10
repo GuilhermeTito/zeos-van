@@ -6,11 +6,13 @@ import estiloPadrao from "../../../../styles/padrao"
 import { gravarViagemMarcadaPorId, preencherDadosViagem } from "../../../../controllers/viagem-marcada"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useLocalSearchParams } from "expo-router"
+import Checkbox from "expo-checkbox"
 
 export default function ExibirViagem(){
     const [paginaJaCarregada, setPaginaJaCarregada] = useState(false)
     const { id_viagem } = useLocalSearchParams()
     const [dataViagem, setDataViagem] = useState("")
+    const [vaiNoDia, setVaiNoDia] = useState(false)
     const [pontoPartida, setPontoPartida] = useState("")
     const [horarioPartida, setHorarioPartida] = useState("")
     const [pontoChegada, setPontoChegada] = useState("")
@@ -28,6 +30,7 @@ export default function ExibirViagem(){
         preencherDadosViagem(
             idString,
             setDataViagem,
+            setVaiNoDia,
             setPontoPartida,
             setHorarioPartida,
             setPontoChegada,
@@ -57,6 +60,15 @@ export default function ExibirViagem(){
                     placeholder="Ponto de partida"
                     value={dataViagem}
                     onChangeText={setDataViagem}
+                />
+                <Text>Vai no dia:</Text>
+                <Checkbox
+                    style={{
+                        margin: 8
+                    }}
+                    value={vaiNoDia}
+                    onValueChange={setVaiNoDia}
+                    color={vaiNoDia ? '#4630EB' : undefined}
                 />
                 <Text>Ponto de partida</Text>
                 <TextInput
@@ -94,7 +106,7 @@ export default function ExibirViagem(){
                 alignItems: "center",
                 width: "100%"
             }}>
-                <Botao title="Salvar" onPress={() => gravarViagemMarcadaPorId(idString, dataViagem, pontoPartida, horarioPartida, pontoChegada, horarioChegada)}/>
+                <Botao title="Salvar" onPress={() => gravarViagemMarcadaPorId(idString, dataViagem, vaiNoDia, pontoPartida, horarioPartida, pontoChegada, horarioChegada)}/>
             </View>
         </SafeAreaView>
     )

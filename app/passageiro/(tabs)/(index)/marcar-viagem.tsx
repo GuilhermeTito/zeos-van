@@ -5,9 +5,11 @@ import { Botao } from "../../../../components/Botao"
 import estiloPadrao from "../../../../styles/padrao"
 import { gravarViagemMarcada } from "../../../../controllers/viagem-marcada"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import Checkbox from "expo-checkbox"
 
 export default function MarcarViagem(){
     const [dataViagem, setDataViagem] = useState("")
+    const [vaiNoDia, setVaiNoDia] = useState(true)
     const [pontoPartida, setPontoPartida] = useState("")
     const [horarioPartida, setHorarioPartida] = useState("")
     const [pontoChegada, setPontoChegada] = useState("")
@@ -34,6 +36,15 @@ export default function MarcarViagem(){
                     placeholder="Ponto de partida"
                     value={dataViagem}
                     onChangeText={setDataViagem}
+                />
+                <Text>Vai no dia:</Text>
+                <Checkbox
+                    style={{
+                        margin: 8
+                    }}
+                    value={vaiNoDia}
+                    onValueChange={setVaiNoDia}
+                    color={vaiNoDia ? '#4630EB' : undefined}
                 />
                 <Text>Ponto de partida</Text>
                 <TextInput
@@ -71,7 +82,7 @@ export default function MarcarViagem(){
                 alignItems: "center",
                 width: "100%"
             }}>
-                <Botao title="Salvar" onPress={() => gravarViagemMarcada(AsyncStorage.getItem("accessToken"), dataViagem, pontoPartida, horarioPartida, pontoChegada, horarioChegada)}/>
+                <Botao title="Salvar" onPress={() => gravarViagemMarcada(AsyncStorage.getItem("accessToken"), dataViagem, vaiNoDia, pontoPartida, horarioPartida, pontoChegada, horarioChegada)}/>
             </View>
         </SafeAreaView>
     )

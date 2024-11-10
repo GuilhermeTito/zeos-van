@@ -96,13 +96,14 @@ export async function buscarTodasAsViagensMarcadas(id_passageiro: number) {
 export async function cadastrarViagemMarcada(
     id_passageiro: number,
     data_viagem: string,
+    vai_no_dia: boolean,
     ponto_partida: string,
-    latitude_partida: string,
-    longitude_partida: string,
+    latitude_partida: number,
+    longitude_partida: number,
     horario_partida: string,
     ponto_chegada: string,
-    latitude_chegada: string,
-    longitude_chegada: string,
+    latitude_chegada: number,
+    longitude_chegada: number,
     horario_chegada: string
 ): Promise<boolean> {
     const reqURL = process.env.EXPO_PUBLIC_API_URL + "viagem-marcada"
@@ -115,6 +116,7 @@ export async function cadastrarViagemMarcada(
     const reqBody = JSON.stringify({
         id_passageiro: id_passageiro,
         data_viagem: data_viagem,
+        vai_no_dia: vai_no_dia,
         ponto_partida: ponto_partida,
         latitude_partida: latitude_partida,
         longitude_partida: longitude_partida,
@@ -142,13 +144,14 @@ export async function cadastrarViagemMarcada(
 export async function atualizarViagemMarcada(
     id_passageiro: number,
     data_viagem: string,
+    vai_no_dia: boolean,
     ponto_partida: string,
-    latitude_partida: string,
-    longitude_partida: string,
+    latitude_partida: number,
+    longitude_partida: number,
     horario_partida: string,
     ponto_chegada: string,
-    latitude_chegada: string,
-    longitude_chegada: string,
+    latitude_chegada: number,
+    longitude_chegada: number,
     horario_chegada: string
 ): Promise<boolean> {
     const reqURL = new URL(process.env.EXPO_PUBLIC_API_URL + "viagem-marcada")
@@ -167,6 +170,7 @@ export async function atualizarViagemMarcada(
 
     const reqBody = JSON.stringify({
         data_viagem: data_viagem,
+        vai_no_dia: vai_no_dia,
         ponto_partida: ponto_partida,
         latitude_partida: latitude_partida,
         longitude_partida: longitude_partida,
@@ -194,13 +198,14 @@ export async function atualizarViagemMarcada(
 export async function atualizarViagemMarcadaPorId(
     id: string,
     data_viagem: string,
+    vai_no_dia: boolean,
     ponto_partida: string,
-    latitude_partida: string,
-    longitude_partida: string,
+    latitude_partida: number,
+    longitude_partida: number,
     horario_partida: string,
     ponto_chegada: string,
-    latitude_chegada: string,
-    longitude_chegada: string,
+    latitude_chegada: number,
+    longitude_chegada: number,
     horario_chegada: string
 ): Promise<boolean> {
     const reqURL = new URL(process.env.EXPO_PUBLIC_API_URL + "viagem-marcada")
@@ -218,6 +223,7 @@ export async function atualizarViagemMarcadaPorId(
 
     const reqBody = JSON.stringify({
         data_viagem: data_viagem,
+        vai_no_dia: vai_no_dia,
         ponto_partida: ponto_partida,
         latitude_partida: latitude_partida,
         longitude_partida: longitude_partida,

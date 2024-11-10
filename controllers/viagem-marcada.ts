@@ -8,6 +8,7 @@ import React from "react"
 export async function preencherDadosViagem(
     id: string,
     setDataViagem: React.Dispatch<React.SetStateAction<string>>,
+    setVaiNoDia: React.Dispatch<React.SetStateAction<boolean>>,
     setPontoPartida: React.Dispatch<React.SetStateAction<string>>,
     setHorarioPartida: React.Dispatch<React.SetStateAction<string>>,
     setPontoChegada: React.Dispatch<React.SetStateAction<string>>,
@@ -19,14 +20,20 @@ export async function preencherDadosViagem(
         return
     }
 
+    const vai_no_dia = viagemMarcada.vai_no_dia == 1
+
     setDataViagem(viagemMarcada.data_viagem)
+    setVaiNoDia(vai_no_dia)
     setPontoPartida(viagemMarcada.ponto_partida)
     setHorarioPartida(viagemMarcada.horario_partida)
     setPontoChegada(viagemMarcada.ponto_chegada)
     setHorarioChegada(viagemMarcada.horario_chegada)
 }
 
-export async function buscarViagensMarcadas(accessToken: Promise<string | null>, setViagensMarcadas: React.Dispatch<React.SetStateAction<{id: number, data_viagem: string}[]>>){
+export async function buscarViagensMarcadas(
+    accessToken: Promise<string | null>,
+    setViagensMarcadas: React.Dispatch<React.SetStateAction<{id: number, data_viagem: string}[]>>
+){
     const dadosUsuario = await validarAccessToken(accessToken)
     
     if(dadosUsuario == null){
@@ -45,6 +52,7 @@ export async function buscarViagensMarcadas(accessToken: Promise<string | null>,
 export async function gravarViagemMarcada(
     accessToken: Promise<string | null>,
     data_viagem: string,
+    vai_no_dia: boolean,
     ponto_partida: string,
     horario_partida: string,
     ponto_chegada: string,
@@ -57,17 +65,30 @@ export async function gravarViagemMarcada(
     }
 
     const localPartida = await buscarLugar(ponto_partida)
+    let latitude_partida = 0
+    let longitude_partida = 0
+
     const localChegada = await buscarLugar(ponto_chegada)
+    let latitude_chegada = 0
+    let longitude_chegada = 0
 
-    if(localPartida.status == null || localPartida.status == "ZERO_RESULTS" || localPartida.status == "INVALID_REQUEST"){
-        Alert.alert("Não encontrado", "Ponto de partida não encontrado.")
-        return
-    }
+    if(vai_no_dia){
+        if(localPartida.status == null || localPartida.status == "ZERO_RESULTS" || localPartida.status == "INVALID_REQUEST"){
+            Alert.alert("Não encontrado", "Ponto de partida não encontrado.")
+            return
+        }
 
-    if(localChegada.status == null || localChegada.status == "ZERO_RESULTS" || localChegada.status == "INVALID_REQUEST"){
-        Alert.alert("Não encontrado", "Ponto de chegada não encontrado.")
-        return
-    }
+        if(localChegada.status == null || localChegada.status == "ZERO_RESULTS" || localChegada.status == "INVALID_REQUEST"){
+            Alert.alert("Não encontrado", "Ponto de chegada não encontrado.")
+            return
+        }
+
+        latitude_partida = localPartida.results[0].geometry.location.lat
+        longitude_partida = localPartida.results[0].geometry.location.lng
+
+        latitude_chegada = localChegada.results[0].geometry.location.lat
+        longitude_chegada = localChegada.results[0].geometry.location.lng
+    }    
 
     const viagemMarcada = await buscarViagemMarcada(dadosUsuario.id, data_viagem)
 
@@ -77,26 +98,28 @@ export async function gravarViagemMarcada(
         sucesso = await cadastrarViagemMarcada(
             dadosUsuario.id,
             data_viagem,
+            vai_no_dia,
             ponto_partida,
-            localPartida.results[0].geometry.location.lat,
-            localPartida.results[0].geometry.location.lng,
+            latitude_partida,
+            longitude_partida,
             horario_partida,
             ponto_chegada,
-            localChegada.results[0].geometry.location.lat,
-            localChegada.results[0].geometry.location.lng,
+            latitude_chegada,
+            longitude_chegada,
             horario_chegada
         )
     } else {
         sucesso = await atualizarViagemMarcada(
             dadosUsuario.id,
             data_viagem,
+            vai_no_dia,
             ponto_partida,
-            localPartida.results[0].geometry.location.lat,
-            localPartida.results[0].geometry.location.lng,
+            latitude_partida,
+            longitude_partida,
             horario_partida,
             ponto_chegada,
-            localChegada.results[0].geometry.location.lat,
-            localChegada.results[0].geometry.location.lng,
+            latitude_chegada,
+            longitude_chegada,
             horario_chegada
         )
     }
@@ -112,34 +135,49 @@ export async function gravarViagemMarcada(
 export async function gravarViagemMarcadaPorId(
     id: string,
     data_viagem: string,
+    vai_no_dia: boolean,
     ponto_partida: string,
     horario_partida: string,
     ponto_chegada: string,
     horario_chegada: string
 ) {
     const localPartida = await buscarLugar(ponto_partida)
+    let latitude_partida = 0
+    let longitude_partida = 0
+
     const localChegada = await buscarLugar(ponto_chegada)
+    let latitude_chegada = 0
+    let longitude_chegada = 0
 
-    if(localPartida.status == null || localPartida.status == "ZERO_RESULTS" || localPartida.status == "INVALID_REQUEST"){
-        Alert.alert("Não encontrado", "Ponto de partida não encontrado.")
-        return
-    }
+    if(vai_no_dia){
+        if(localPartida.status == null || localPartida.status == "ZERO_RESULTS" || localPartida.status == "INVALID_REQUEST"){
+            Alert.alert("Não encontrado", "Ponto de partida não encontrado.")
+            return
+        }
 
-    if(localChegada.status == null || localChegada.status == "ZERO_RESULTS" || localChegada.status == "INVALID_REQUEST"){
-        Alert.alert("Não encontrado", "Ponto de chegada não encontrado.")
-        return
+        if(localChegada.status == null || localChegada.status == "ZERO_RESULTS" || localChegada.status == "INVALID_REQUEST"){
+            Alert.alert("Não encontrado", "Ponto de chegada não encontrado.")
+            return
+        }
+
+        latitude_partida = localPartida.results[0].geometry.location.lat
+        longitude_partida = localPartida.results[0].geometry.location.lng
+
+        latitude_chegada = localChegada.results[0].geometry.location.lat
+        longitude_chegada = localChegada.results[0].geometry.location.lng
     }
 
     const sucesso = await atualizarViagemMarcadaPorId(
         id,
         data_viagem,
+        vai_no_dia,
         ponto_partida,
-        localPartida.results[0].geometry.location.lat,
-        localPartida.results[0].geometry.location.lng,
+        latitude_partida,
+        longitude_partida,
         horario_partida,
         ponto_chegada,
-        localChegada.results[0].geometry.location.lat,
-        localChegada.results[0].geometry.location.lng,
+        latitude_chegada,
+        longitude_chegada,
         horario_chegada
     )
     

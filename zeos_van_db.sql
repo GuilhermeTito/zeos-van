@@ -36,6 +36,7 @@ CREATE TABLE viagem_marcada (
 	id INT NOT NULL AUTO_INCREMENT,
 	id_passageiro INT NOT NULL,
 	data_viagem DATE NOT NULL,
+    vai_no_dia BOOLEAN NOT NULL,
 	ponto_partida VARCHAR(300) NOT NULL,
     latitude_partida DOUBLE NOT NULL,
     longitude_partida DOUBLE NOT NULL,
