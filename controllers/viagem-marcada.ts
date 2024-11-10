@@ -1,7 +1,7 @@
 import { router } from "expo-router"
 import { validarAccessToken } from "../models/auth"
 import { buscarLugar } from "../models/google"
-import { atualizarViagemMarcada, buscarTodasAsViagensMarcadas, buscarViagemMarcada, buscarViagemMarcadaPorId, cadastrarViagemMarcada } from "../models/viagem-marcada"
+import { atualizarViagemMarcada, atualizarViagemMarcadaPorId, buscarTodasAsViagensMarcadas, buscarViagemMarcada, buscarViagemMarcadaPorId, cadastrarViagemMarcada } from "../models/viagem-marcada"
 import { Alert } from "react-native"
 import React from "react"
 
@@ -101,6 +101,48 @@ export async function gravarViagemMarcada(
         )
     }
 
+    if(sucesso){
+        Alert.alert("Sucesso", "Gravado com sucesso!")
+        router.back()
+    } else {
+        Alert.alert("Erro", "Erro ao gravar.")
+    }
+}
+
+export async function gravarViagemMarcadaPorId(
+    id: string,
+    data_viagem: string,
+    ponto_partida: string,
+    horario_partida: string,
+    ponto_chegada: string,
+    horario_chegada: string
+) {
+    const localPartida = await buscarLugar(ponto_partida)
+    const localChegada = await buscarLugar(ponto_chegada)
+
+    if(localPartida.status == null || localPartida.status == "ZERO_RESULTS" || localPartida.status == "INVALID_REQUEST"){
+        Alert.alert("Não encontrado", "Ponto de partida não encontrado.")
+        return
+    }
+
+    if(localChegada.status == null || localChegada.status == "ZERO_RESULTS" || localChegada.status == "INVALID_REQUEST"){
+        Alert.alert("Não encontrado", "Ponto de chegada não encontrado.")
+        return
+    }
+
+    const sucesso = await atualizarViagemMarcadaPorId(
+        id,
+        data_viagem,
+        ponto_partida,
+        localPartida.results[0].geometry.location.lat,
+        localPartida.results[0].geometry.location.lng,
+        horario_partida,
+        ponto_chegada,
+        localChegada.results[0].geometry.location.lat,
+        localChegada.results[0].geometry.location.lng,
+        horario_chegada
+    )
+    
     if(sucesso){
         Alert.alert("Sucesso", "Gravado com sucesso!")
         router.back()

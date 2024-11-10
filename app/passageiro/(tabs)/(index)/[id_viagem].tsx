@@ -3,11 +3,12 @@ import { View, Text, TextInput } from "react-native"
 import React, { useState } from "react"
 import { Botao } from "../../../../components/Botao"
 import estiloPadrao from "../../../../styles/padrao"
-import { gravarViagemMarcada, preencherDadosViagem } from "../../../../controllers/viagem-marcada"
+import { gravarViagemMarcadaPorId, preencherDadosViagem } from "../../../../controllers/viagem-marcada"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useLocalSearchParams } from "expo-router"
 
 export default function ExibirViagem(){
+    const [paginaJaCarregada, setPaginaJaCarregada] = useState(false)
     const { id_viagem } = useLocalSearchParams()
     const [dataViagem, setDataViagem] = useState("")
     const [pontoPartida, setPontoPartida] = useState("")
@@ -23,14 +24,17 @@ export default function ExibirViagem(){
         idString = id_viagem
     }
 
-    preencherDadosViagem(
-        idString,
-        setDataViagem,
-        setPontoPartida,
-        setHorarioPartida,
-        setPontoChegada,
-        setHorarioChegada
-    )
+    if(!paginaJaCarregada){
+        preencherDadosViagem(
+            idString,
+            setDataViagem,
+            setPontoPartida,
+            setHorarioPartida,
+            setPontoChegada,
+            setHorarioChegada
+        )
+        setPaginaJaCarregada(true)
+    }    
 
     return (
         <SafeAreaView style={{
@@ -90,7 +94,7 @@ export default function ExibirViagem(){
                 alignItems: "center",
                 width: "100%"
             }}>
-                <Botao title="Salvar" onPress={() => gravarViagemMarcada(AsyncStorage.getItem("accessToken"), dataViagem, pontoPartida, horarioPartida, pontoChegada, horarioChegada)}/>
+                <Botao title="Salvar" onPress={() => gravarViagemMarcadaPorId(idString, dataViagem, pontoPartida, horarioPartida, pontoChegada, horarioChegada)}/>
             </View>
         </SafeAreaView>
     )
