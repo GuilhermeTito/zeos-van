@@ -1,12 +1,13 @@
 import React, { useState } from "react"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { View, TextInput, FlatList, Text, StyleSheet } from "react-native"
-import { Botao } from "../../../../components/Botao"
-import { buscarTurmas, novaTurma } from "../../../../controllers/turma"
+import { Botao, BotaoComIcone } from "../../../../components/Botao"
+import { buscarTurmas, excluirTurma, novaTurma } from "../../../../controllers/turma"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import FontAwesome from "@expo/vector-icons/FontAwesome"
 
 const estilo = StyleSheet.create({
-    botao: {
+    botaoAdicionar: {
         alignItems: 'center',
         justifyContent: 'center',
         paddingVertical: 10,
@@ -14,6 +15,27 @@ const estilo = StyleSheet.create({
         borderRadius: 5,
         elevation: 5,
         backgroundColor: "#15D100",
+        margin: 10
+    },
+    botaoTurma: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 10,
+        paddingHorizontal: 30,
+        borderRadius: 5,
+        elevation: 5,
+        backgroundColor: "#FFD000",
+        margin: 10,
+        width: "80%"
+    },
+    botaoDeletar: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+        borderRadius: 5,
+        elevation: 5,
+        backgroundColor: "#FF0000",
         margin: 10
     },
     input: {
@@ -68,7 +90,7 @@ export default function Turmas(){
                         value={nome}
                         onChangeText={setNome}
                     />
-                    <Botao title="Adicionar" style={estilo.botao} onPress={() => {
+                    <Botao title="Adicionar" style={estilo.botaoAdicionar} onPress={() => {
                         if(nome != "") {
                             novaTurma(AsyncStorage.getItem("accessToken"), nome)
                             setNome("")    
@@ -86,7 +108,23 @@ export default function Turmas(){
                     data={turmas}
                     renderItem={({item}) => {
                         return (
-                            <Botao title={item.nome}/>
+                            <View style={{
+                                flexDirection: "row",
+                                justifyContent: "space-around",
+                                alignItems: "center",
+                                width: "100%"
+                            }}>
+                                <Botao
+                                    title={item.nome}
+                                    style={estilo.botaoTurma}
+                                />
+                                <BotaoComIcone
+                                    style={estilo.botaoDeletar}
+                                    onPress={() => excluirTurma(item.id)}
+                                >
+                                    <FontAwesome name={"trash"} size={36} color="black"/>
+                                </BotaoComIcone>
+                            </View>
                         )
                     }}
                 />

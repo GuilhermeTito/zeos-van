@@ -60,3 +60,33 @@ export async function cadastrarTurma(id_motorista: number, nome: string): Promis
     
     return false
 }
+
+export async function deletarTurma(id: number): Promise<boolean> {
+    const reqURL = process.env.EXPO_PUBLIC_API_URL + "turma"
+
+    const reqHeaders = new Headers({
+        Accept: "application/json",
+        "Content-Type": "application/json"
+    })
+    
+    const reqBody = JSON.stringify({
+        id: id
+    })
+    
+    const req = new Request(
+        reqURL,
+        {
+            method: "DELETE",
+            headers: reqHeaders,
+            body: reqBody
+        }
+    )
+
+    const res = await fetch(req)
+
+    if(res.status == 200){
+        return true
+    }
+    
+    return false
+}

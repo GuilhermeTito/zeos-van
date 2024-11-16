@@ -1,6 +1,6 @@
 import { Alert } from "react-native"
 import { validarAccessToken } from "../models/auth"
-import { buscarTodasAsTurmas, cadastrarTurma } from "../models/turma"
+import { buscarTodasAsTurmas, cadastrarTurma, deletarTurma } from "../models/turma"
 
 export async function buscarTurmas(
     accessToken: Promise<string | null>,
@@ -34,5 +34,15 @@ export async function novaTurma(accessToken: Promise<string | null>, nome: strin
         Alert.alert("Turma cadastrada com sucesso!")
     } else {
         Alert.alert("Erro ao cadastrar turma.")
+    }
+}
+
+export async function excluirTurma(id: number) {
+    const sucesso = await deletarTurma(id)
+
+    if(sucesso){
+        Alert.alert("Turma excluída com sucesso!")
+    } else {
+        Alert.alert("Erro ao excluir turma.")
     }
 }
