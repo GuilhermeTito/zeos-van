@@ -2,7 +2,7 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import { View, Text, TextInput, FlatList, StyleSheet } from "react-native"
 import React, { useState } from "react"
 import { Botao, BotaoComIcone } from "../../../../../components/Botao"
-import { adicionarPassageiro, buscarPassageiros } from "../../../../../controllers/turma"
+import { buscarPassageiros, adicionarPassageiro, removerPassageiro  } from "../../../../../controllers/turma"
 import { useLocalSearchParams } from "expo-router"
 import FontAwesome from "@expo/vector-icons/FontAwesome"
 
@@ -135,8 +135,8 @@ export default function Turma(){
                                 />
                                 <BotaoComIcone
                                     style={estilo.botaoDeletar}
-                                    onPress={() => {
-                                        //excluirTurma(item.id)
+                                    onPress={async () => {
+                                        await removerPassageiro(idString, item.id_passageiro)
                                         buscarPassageiros(idString, setPassageiros)
                                     }}
                                 >

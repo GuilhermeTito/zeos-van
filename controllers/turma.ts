@@ -1,7 +1,7 @@
 import { Alert } from "react-native"
 import { validarAccessToken } from "../models/auth"
 import { buscarPassageirosDaTurma, buscarTodasAsTurmas, cadastrarTurma, deletarTurma } from "../models/turma"
-import { cadastrarPassageiroTurma } from "../models/passageiro-turma"
+import { cadastrarPassageiroTurma, deletarPassageiroTurma } from "../models/passageiro-turma"
 
 export async function buscarTurmas(
     accessToken: Promise<string | null>,
@@ -47,7 +47,7 @@ export async function excluirTurma(id: number) {
         Alert.alert("Erro ao excluir turma.")
     }
 }
-//[{id: 0, passageiro: {nome: "Vazio"}}]
+
 export async function buscarPassageiros(
     id_turma: string,
     setPassageiros: React.Dispatch<React.SetStateAction<{ id_passageiro: number, passageiro: { nome: string } }[]>>
@@ -71,5 +71,18 @@ export async function adicionarPassageiro(
         Alert.alert("Passageiro adicionado com sucesso!")
     } else {
         Alert.alert("Erro ao adicionar passageiro à turma.")
+    }
+}
+
+export async function removerPassageiro(
+    id_turma: string,
+    id_passageiro: number
+) {
+    const sucesso = await deletarPassageiroTurma(id_turma, id_passageiro)
+
+    if(sucesso){
+        Alert.alert("Passageiro removido com sucesso!")
+    } else {
+        Alert.alert("Erro ao remover passageiro da turma.")
     }
 }
