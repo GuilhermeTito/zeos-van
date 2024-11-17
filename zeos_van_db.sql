@@ -75,7 +75,7 @@ CREATE TABLE passageiro_turma (
 	CONSTRAINT fk_passageiro_turma_passageiro
 	FOREIGN KEY (id_passageiro)
 	REFERENCES passageiro (id)
-	ON DELETE NO ACTION
+	ON DELETE CASCADE
 	ON UPDATE NO ACTION,
 	CONSTRAINT fk_passageiro_turma_turma
 	FOREIGN KEY (id_turma)
