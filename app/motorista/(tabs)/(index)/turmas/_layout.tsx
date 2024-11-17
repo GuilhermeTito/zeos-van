@@ -7,7 +7,7 @@ export default function RootLayout(){
             headerShown: false
         }}>
             <Stack.Screen name="index" />
-            <Stack.Screen name="mapa" />
+            <Stack.Screen name="[id_turma]" />
         </Stack>
     )
 }

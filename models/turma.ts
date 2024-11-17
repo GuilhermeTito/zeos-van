@@ -90,3 +90,35 @@ export async function deletarTurma(id: number): Promise<boolean> {
     
     return false
 }
+
+export async function buscarPassageirosDaTurma(id_turma: string) {
+    const reqURL = new URL(process.env.EXPO_PUBLIC_API_URL + "passageiro-turma/todos")
+
+    const queryParams = {
+        id_turma: id_turma
+    }
+    
+    Object.keys(queryParams).forEach(key => reqURL.searchParams.append(key, queryParams[key]))
+
+    const reqHeaders = new Headers({
+        Accept: "application/json",
+        "Content-Type": "application/json"
+    })
+    
+    const req = new Request(
+        reqURL,
+        {
+            method: "GET",
+            headers: reqHeaders
+        }
+    )
+
+    const res = await fetch(req)
+
+    try {
+        return await res.json()
+    } catch (error) {
+        console.log(error)
+        return
+    }
+}

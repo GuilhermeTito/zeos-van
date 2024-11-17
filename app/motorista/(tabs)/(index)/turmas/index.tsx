@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { View, TextInput, FlatList, Text, StyleSheet } from "react-native"
-import { Botao, BotaoComIcone } from "../../../../components/Botao"
-import { buscarTurmas, excluirTurma, novaTurma } from "../../../../controllers/turma"
+import { Botao, BotaoComIcone, BotaoLink } from "../../../../../components/Botao"
+import { buscarTurmas, excluirTurma, novaTurma } from "../../../../../controllers/turma"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import FontAwesome from "@expo/vector-icons/FontAwesome"
 
@@ -52,9 +52,13 @@ const estilo = StyleSheet.create({
 export default function Turmas(){
     const [turmas, setTurmas] = useState([{id: 0, nome: "Vazio"}])
     const [nome, setNome] = useState("")
+    const [jaCarregada, seJaCarregada] = useState(false)
     
-    buscarTurmas(AsyncStorage.getItem("accessToken"), setTurmas)
-
+    if(!jaCarregada){
+        buscarTurmas(AsyncStorage.getItem("accessToken"), setTurmas)
+        seJaCarregada(true)
+    }
+    
     return (
         <SafeAreaView
             style={{
@@ -90,10 +94,11 @@ export default function Turmas(){
                         value={nome}
                         onChangeText={setNome}
                     />
-                    <Botao title="Adicionar" style={estilo.botaoAdicionar} onPress={() => {
+                    <Botao title="Adicionar" style={estilo.botaoAdicionar} onPress={async () => {
                         if(nome != "") {
-                            novaTurma(AsyncStorage.getItem("accessToken"), nome)
-                            setNome("")    
+                            await novaTurma(AsyncStorage.getItem("accessToken"), nome)
+                            setNome("")
+                            buscarTurmas(AsyncStorage.getItem("accessToken"), setTurmas)   
                         }
                     }}/>
                 </View>
@@ -114,13 +119,17 @@ export default function Turmas(){
                                 alignItems: "center",
                                 width: "100%"
                             }}>
-                                <Botao
+                                <BotaoLink
                                     title={item.nome}
                                     style={estilo.botaoTurma}
+                                    href={"motorista/turmas/" + item.id}
                                 />
                                 <BotaoComIcone
                                     style={estilo.botaoDeletar}
-                                    onPress={() => excluirTurma(item.id)}
+                                    onPress={async () => {
+                                        await excluirTurma(item.id)
+                                        buscarTurmas(AsyncStorage.getItem("accessToken"), setTurmas)
+                                    }}
                                 >
                                     <FontAwesome name={"trash"} size={36} color="black"/>
                                 </BotaoComIcone>
