@@ -1,8 +1,8 @@
 import { SafeAreaView } from "react-native-safe-area-context"
 import { View, Text, TextInput, FlatList, StyleSheet } from "react-native"
 import React, { useState } from "react"
-import { Botao, BotaoComIcone } from "../../../../../components/Botao"
-import { buscarPassageiros, adicionarPassageiro, removerPassageiro  } from "../../../../../controllers/turma"
+import { Botao, BotaoComIcone, BotaoLink } from "../../../../../../components/Botao"
+import { buscarPassageiros, adicionarPassageiro, removerPassageiro  } from "../../../../../../controllers/turma"
 import { useLocalSearchParams } from "expo-router"
 import FontAwesome from "@expo/vector-icons/FontAwesome"
 
@@ -129,9 +129,10 @@ export default function Turma(){
                                 alignItems: "center",
                                 width: "100%"
                             }}>
-                                <Botao
+                                <BotaoLink
                                     title={item.id_passageiro + " - " + item.passageiro.nome}
                                     style={estilo.botaoTurma}
+                                    href={"motorista/turmas/" + idString + "/" + item.id_passageiro}
                                 />
                                 <BotaoComIcone
                                     style={estilo.botaoDeletar}
