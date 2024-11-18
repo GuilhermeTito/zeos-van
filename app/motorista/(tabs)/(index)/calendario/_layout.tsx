@@ -7,7 +7,7 @@ export default function RootLayout(){
             headerShown: false
         }}>
             <Stack.Screen name="index" />
-            <Stack.Screen name="[id_viagem_marcada]" />
+            <Stack.Screen name="[id_viagem]" />
         </Stack>
     )
 }

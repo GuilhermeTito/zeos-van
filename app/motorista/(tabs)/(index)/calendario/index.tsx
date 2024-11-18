@@ -1,9 +1,8 @@
 import React, { useState } from "react"
 import { SafeAreaView } from "react-native-safe-area-context"
-import { View, TextInput, FlatList, Text, StyleSheet } from "react-native"
-import { Botao, BotaoComIcone, BotaoLink } from "../../../../../components/Botao"
+import { FlatList } from "react-native"
+import { BotaoLink } from "../../../../../components/Botao"
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import FontAwesome from "@expo/vector-icons/FontAwesome"
 import { buscarViagensMarcadasPorMotorista } from "../../../../../controllers/viagem-marcada"
 
 export default function Calendario(){
@@ -23,7 +22,7 @@ export default function Calendario(){
                     return (
                         <BotaoLink
                             title={item.nome + " - " + item.data_viagem}
-                            href={"motorista/turmas/" + item.id}
+                            href={"motorista/calendario/" + item.id}
                         />
                     )
                 }}
