@@ -4,10 +4,8 @@ import React, { useState } from "react"
 import { BotaoLink } from "../components/Botao"
 import { imgLogoZeosVan } from "../assets/imagens"
 import { verificarAccessToken } from "../controllers"
-//import AsyncStorage from "@react-native-async-storage/async-storage"
 
 export default function Index() {
-    //AsyncStorage.setItem("accessToken", "")
     
     const [linkPagina, setLinkPagina] = useState("")
 
@@ -58,7 +56,7 @@ export default function Index() {
                 alignItems: "center"
             }}>
                 <Text style={{ fontSize: 12 }}>
-                    zeos-van@0.12.0
+                    zeos-van@0.12.1
                 </Text>
             </View>
         </SafeAreaView>

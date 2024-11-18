@@ -93,6 +93,38 @@ export async function buscarTodasAsViagensMarcadas(id_passageiro: number) {
     }
 }
 
+export async function buscarTodasAsViagensMarcadasPorMotorista(id_motorista: number) {
+    const reqURL = new URL(process.env.EXPO_PUBLIC_API_URL + "viagem-marcada/motorista")
+    
+    const queryParams = {
+        id_motorista: id_motorista
+    }
+    
+    Object.keys(queryParams).forEach(key => reqURL.searchParams.append(key, queryParams[key]))
+
+    const reqHeaders = new Headers({
+        Accept: "application/json",
+        "Content-Type": "application/json"
+    })
+    
+    const req = new Request(
+        reqURL,
+        {
+            method: "GET",
+            headers: reqHeaders
+        }
+    )
+
+    const res = await fetch(req)
+
+    try {
+        return await res.json()
+    } catch (error) {
+        console.log(error)
+        return
+    }
+}
+
 export async function cadastrarViagemMarcada(
     id_passageiro: number,
     data_viagem: string,

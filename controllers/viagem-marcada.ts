@@ -1,7 +1,7 @@
 import { router } from "expo-router"
 import { validarAccessToken } from "../models/auth"
 import { buscarLugar } from "../models/google"
-import { atualizarViagemMarcada, atualizarViagemMarcadaPorId, buscarTodasAsViagensMarcadas, buscarViagemMarcada, buscarViagemMarcadaPorId, cadastrarViagemMarcada } from "../models/viagem-marcada"
+import { atualizarViagemMarcada, atualizarViagemMarcadaPorId, buscarTodasAsViagensMarcadas, buscarTodasAsViagensMarcadasPorMotorista, buscarViagemMarcada, buscarViagemMarcadaPorId, cadastrarViagemMarcada } from "../models/viagem-marcada"
 import { Alert } from "react-native"
 import React from "react"
 
@@ -46,6 +46,27 @@ export async function buscarViagensMarcadas(
         setViagensMarcadas([{id: 0, data_viagem: "Vazio"}])
     } else {
         setViagensMarcadas(arrayDeViagens)
+    }
+}
+
+export async function buscarViagensMarcadasPorMotorista(
+    accessToken: Promise<string | null>,
+    setViagensMarcadas: React.Dispatch<React.SetStateAction<{ id: number, nome: string, data_viagem: string }[]>>
+){
+    const dadosUsuario = await validarAccessToken(accessToken)
+    
+    if(dadosUsuario == null){
+        return
+    }
+    
+    const arrayDeViagens = await buscarTodasAsViagensMarcadasPorMotorista(dadosUsuario.id)
+
+    if(arrayDeViagens == null){
+        setViagensMarcadas([{id: 0, nome: "Vazio", data_viagem: "Vazio"}])
+    } else {
+        setViagensMarcadas(arrayDeViagens.map((viagem) => {
+            return { id: viagem.id, nome: viagem.nome, data_viagem: viagem.data_viagem }
+        }))
     }
 }
 

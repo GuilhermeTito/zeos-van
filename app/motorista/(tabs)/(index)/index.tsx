@@ -15,9 +15,9 @@ export default function IndexMotorista(){
                 <FontAwesome name={"users"} size={36} color="black"/>
             </BotaoLinkComIcone>
             
-            <BotaoComIcone title="Calendário">
+            <BotaoLinkComIcone title="Calendário" href="motorista/calendario">
                 <FontAwesome name={"calendar"} size={36} color="black"/>
-            </BotaoComIcone>
+            </BotaoLinkComIcone>
             
             <BotaoLinkComIcone title="Mapa" href="motorista/mapa">
                 <FontAwesome name={"map"} size={36} color="black"/>
