@@ -1,6 +1,6 @@
 import { Alert } from "react-native"
 import { validarAccessToken } from "../models/auth"
-import { buscarPassageirosDaTurma, buscarTodasAsTurmas, cadastrarTurma, deletarTurma } from "../models/turma"
+import { atualizarTurma, buscarPassageirosDaTurma, buscarTodasAsTurmas, buscarTurma, cadastrarTurma, deletarTurma } from "../models/turma"
 import { cadastrarPassageiroTurma, deletarPassageiroTurma } from "../models/passageiro-turma"
 
 export async function buscarTurmas(
@@ -35,6 +35,16 @@ export async function novaTurma(accessToken: Promise<string | null>, nome: strin
         Alert.alert("Turma cadastrada com sucesso!")
     } else {
         Alert.alert("Erro ao cadastrar turma.")
+    }
+}
+
+export async function gravarAlteracoesTurma(id: string, id_passageiro_origem: string, id_passageiro_destino: string) {
+    const sucesso = await atualizarTurma(id, id_passageiro_origem, id_passageiro_destino)
+
+    if(sucesso){
+        Alert.alert("Atualizado com sucesso!")
+    } else {
+        Alert.alert("Erro ao atualizar.")
     }
 }
 

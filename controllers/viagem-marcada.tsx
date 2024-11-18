@@ -1,9 +1,11 @@
 import { router } from "expo-router"
 import { validarAccessToken } from "../models/auth"
 import { buscarLugar } from "../models/google"
-import { atualizarViagemMarcada, atualizarViagemMarcadaPorId, buscarTodasAsViagensMarcadas, buscarTodasAsViagensMarcadasPorMotorista, buscarViagemMarcada, buscarViagemMarcadaPorId, cadastrarViagemMarcada } from "../models/viagem-marcada"
-import { Alert } from "react-native"
+import { atualizarViagemMarcada, atualizarViagemMarcadaPorId, buscarCoordenadasPorTurmaEData, buscarTodasAsViagensMarcadas, buscarTodasAsViagensMarcadasPorMotorista, buscarViagemMarcada, buscarViagemMarcadaPorId, cadastrarViagemMarcada } from "../models/viagem-marcada"
+import { Alert, Text } from "react-native"
 import React from "react"
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
+import MapViewDirections from "react-native-maps-directions"
 
 export async function preencherDadosViagem(
     id: string,
@@ -68,6 +70,60 @@ export async function buscarViagensMarcadasPorMotorista(
             return { id: viagem.id, nome: viagem.nome, data_viagem: viagem.data_viagem }
         }))
     }
+}
+
+export async function preencherRotaPorTurmaEData(
+    id_turma: string,
+    data_viagem: string,
+    setOrigem: React.Dispatch<React.SetStateAction<{ horario: string, latitude: number, longitude: number }>>,
+    setComponentRota: React.Dispatch<React.SetStateAction<React.JSX.Element>>
+) {
+    const rota = await buscarCoordenadasPorTurmaEData(id_turma, data_viagem)
+
+    if(rota == null){
+        return
+    } 
+    
+    setOrigem(rota.origem)
+    
+    let waypointsExibidos: any[] = []
+    let marcadoresWaypoints: any[] = []
+
+    if(rota.waypoints.length > 0){
+        waypointsExibidos = rota.waypoints.map(waypoint => {
+            if(waypoint.latitude != 0){
+                return { latitude: waypoint.latitude, longitude: waypoint.longitude }
+            }
+        })
+
+        marcadoresWaypoints = waypointsExibidos.map(waypoint => {
+            return <Marker coordinate={waypoint}/>
+        })
+    }
+
+    let apiKey: string = ""
+
+    if(process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY != null) {
+        apiKey = process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY
+    }
+
+    const componentRota: any = (
+        <>
+            <Marker coordinate={rota.origem}/>
+            <Marker coordinate={rota.destino}/>
+            {marcadoresWaypoints}
+            <MapViewDirections
+                origin={{latitude: rota.origem.latitude, longitude: rota.origem.longitude}}
+                destination={{latitude: rota.destino.latitude, longitude: rota.destino.longitude}}
+                apikey={apiKey}
+                waypoints={waypointsExibidos}
+                optimizeWaypoints={true}
+                splitWaypoints={true}
+            />
+        </>
+    )
+
+    setComponentRota(componentRota)
 }
 
 export async function gravarViagemMarcada(

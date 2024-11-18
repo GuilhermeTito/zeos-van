@@ -33,7 +33,7 @@ export default function MarcarViagem(){
                 <Text>Data da Viagem</Text>
                 <TextInput
                     style={estiloPadrao.input}
-                    placeholder="Ponto de partida"
+                    placeholder="Data"
                     value={dataViagem}
                     onChangeText={setDataViagem}
                 />
