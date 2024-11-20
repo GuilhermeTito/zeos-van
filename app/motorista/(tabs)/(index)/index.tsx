@@ -18,10 +18,6 @@ export default function IndexMotorista(){
             <BotaoLinkComIcone title="Calendário" href="motorista/calendario">
                 <FontAwesome name={"calendar"} size={36} color="black"/>
             </BotaoLinkComIcone>
-            
-            <BotaoLinkComIcone title="Mapa" href="motorista/mapa">
-                <FontAwesome name={"map"} size={36} color="black"/>
-            </BotaoLinkComIcone>
         </SafeAreaView>
     )
 }

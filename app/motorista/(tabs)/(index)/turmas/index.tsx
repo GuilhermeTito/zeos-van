@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { View, TextInput, FlatList, Text, StyleSheet } from "react-native"
-import { Botao, BotaoComIcone, BotaoLink } from "../../../../../components/Botao"
+import { Botao, BotaoComIcone, BotaoLink, BotaoLinkComIcone } from "../../../../../components/Botao"
 import { buscarTurmas, excluirTurma, novaTurma } from "../../../../../controllers/turma"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import FontAwesome from "@expo/vector-icons/FontAwesome"
@@ -26,7 +26,7 @@ const estilo = StyleSheet.create({
         elevation: 5,
         backgroundColor: "#FFD000",
         margin: 10,
-        width: "80%"
+        width: "65%"
     },
     botaoDeletar: {
         alignItems: 'center',
@@ -36,6 +36,16 @@ const estilo = StyleSheet.create({
         borderRadius: 5,
         elevation: 5,
         backgroundColor: "#FF0000",
+        margin: 10
+    },
+    botaoMapa: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+        borderRadius: 5,
+        elevation: 5,
+        backgroundColor: "#FFD000",
         margin: 10
     },
     input: {
@@ -119,6 +129,12 @@ export default function Turmas(){
                                 alignItems: "center",
                                 width: "100%"
                             }}>
+                                <BotaoLinkComIcone
+                                    style={estilo.botaoMapa}
+                                    href={"motorista/mapa/" + item.id}
+                                >
+                                    <FontAwesome name={"map"} size={36} color="black"/>
+                                </BotaoLinkComIcone>
                                 <BotaoLink
                                     title={item.nome}
                                     style={estilo.botaoTurma}

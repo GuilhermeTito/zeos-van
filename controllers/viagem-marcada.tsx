@@ -95,9 +95,12 @@ export async function preencherRotaPorTurmaEData(
                 return { latitude: waypoint.latitude, longitude: waypoint.longitude }
             }
         })
-
+        
+        let I = 0
+        
         marcadoresWaypoints = waypointsExibidos.map(waypoint => {
-            return <Marker coordinate={waypoint}/>
+            I++
+            return <Marker key={I} coordinate={waypoint}/>
         })
     }
 
