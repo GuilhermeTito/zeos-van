@@ -1,7 +1,7 @@
 import { router } from "expo-router"
 import { validarAccessToken } from "../models/auth"
 import { buscarLugar } from "../models/google"
-import { atualizarViagemMarcada, atualizarViagemMarcadaPorId, buscarCoordenadasPorTurmaEData, buscarTodasAsViagensMarcadas, buscarTodasAsViagensMarcadasPorMotorista, buscarViagemMarcada, buscarViagemMarcadaPorId, cadastrarViagemMarcada } from "../models/viagem-marcada"
+import { atualizarViagemMarcada, atualizarViagemMarcadaPorId, buscarCoordenadasPorTurmaEData, buscarTodasAsViagensMarcadas, buscarTodasAsViagensMarcadasPorMotorista, buscarViagemMarcada, buscarViagemMarcadaPorId, cadastrarViagemMarcada, deletarViagemMarcada } from "../models/viagem-marcada"
 import { Alert, Text } from "react-native"
 import React from "react"
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
@@ -276,5 +276,15 @@ export async function gravarViagemMarcadaPorId(
         router.back()
     } else {
         Alert.alert("Erro", "Erro ao gravar.")
+    }
+}
+
+export async function excluirViagemMarcada(id: number) {
+    const sucesso = await deletarViagemMarcada(id)
+    
+    if(sucesso){
+        Alert.alert("Viagem excluída com sucesso!")
+    } else {
+        Alert.alert("Erro ao excluir viagem.")
     }
 }

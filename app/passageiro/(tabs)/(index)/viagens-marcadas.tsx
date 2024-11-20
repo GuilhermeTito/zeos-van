@@ -1,13 +1,43 @@
 import { SafeAreaView } from "react-native-safe-area-context"
-import { FlatList, Text } from "react-native"
+import { FlatList, View, StyleSheet } from "react-native"
 import React, { useState } from "react"
-import { buscarViagensMarcadas } from "../../../../controllers/viagem-marcada"
+import { buscarViagensMarcadas, excluirViagemMarcada } from "../../../../controllers/viagem-marcada"
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { Botao, BotaoLink } from "../../../../components/Botao"
+import { BotaoComIcone, BotaoLink } from "../../../../components/Botao"
+import FontAwesome from "@expo/vector-icons/FontAwesome"
+
+const estilo = StyleSheet.create({
+    botaoViagemMarcada: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 10,
+        paddingHorizontal: 30,
+        borderRadius: 5,
+        elevation: 5,
+        backgroundColor: "#FFD000",
+        margin: 10,
+        width: "80%"
+    },
+    botaoDeletar: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+        borderRadius: 5,
+        elevation: 5,
+        backgroundColor: "#FF0000",
+        margin: 10
+    }
+})
 
 export default function ViagensMarcadas() {
     const [viagensMarcadas, setViagensMarcadas] = useState([{id: 0, data_viagem: "Vazio"}])
-    buscarViagensMarcadas(AsyncStorage.getItem("accessToken"), setViagensMarcadas)
+    const [jaCarregada, seJaCarregada] = useState(false)
+    
+    if(!jaCarregada){
+        buscarViagensMarcadas(AsyncStorage.getItem("accessToken"), setViagensMarcadas)
+        seJaCarregada(true)
+    }
 
     return (
         <SafeAreaView>
@@ -15,11 +45,30 @@ export default function ViagensMarcadas() {
                 data={viagensMarcadas}
                 renderItem={({item}) => {
                     return (
-                        <BotaoLink title={item.data_viagem} href={"passageiro/" + item.id}/>
+                        <View style={{
+                            flexDirection: "row",
+                            justifyContent: "space-around",
+                            alignItems: "center",
+                            width: "100%"
+                        }}>
+                            <BotaoLink
+                                title={item.data_viagem}
+                                style={estilo.botaoViagemMarcada}
+                                href={"passageiro/" + item.id}
+                            />
+                            <BotaoComIcone
+                                style={estilo.botaoDeletar}
+                                onPress={async () => {
+                                    await excluirViagemMarcada(item.id)
+                                    buscarViagensMarcadas(AsyncStorage.getItem("accessToken"), setViagensMarcadas)
+                                }}
+                            >
+                                <FontAwesome name={"trash"} size={36} color="black"/>
+                            </BotaoComIcone>
+                        </View>                        
                     )
                 }}
-            >
-            </FlatList>
+            />
         </SafeAreaView>
     )
 }

@@ -312,3 +312,27 @@ export async function atualizarViagemMarcadaPorId(
     
     return res.status == 200
 }
+
+export async function deletarViagemMarcada(id: number): Promise<boolean> {
+    const reqURL = new URL(process.env.EXPO_PUBLIC_API_URL + "viagem-marcada")
+    
+    const reqHeaders = new Headers({
+        Accept: "application/json",
+        "Content-Type": "application/json"
+    })
+
+    const reqBody = JSON.stringify({ id: id })
+    
+    const req = new Request(
+        reqURL,
+        {
+            method: "DELETE",
+            headers: reqHeaders,
+            body: reqBody
+        }
+    )
+
+    const res = await fetch(req)
+    
+    return res.status == 200
+}
