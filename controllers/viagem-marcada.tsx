@@ -78,11 +78,21 @@ export async function preencherRotaPorTurmaEData(
     setOrigem: React.Dispatch<React.SetStateAction<{ horario: string, latitude: number, longitude: number }>>,
     setComponentRota: React.Dispatch<React.SetStateAction<React.JSX.Element>>
 ) {
+    if(data_viagem == ""){
+        const data_atual = new Date()
+
+        const dia = data_atual.getDate();
+        const mes = data_atual.getMonth() + 1;
+        const ano = data_atual.getFullYear();
+
+        data_viagem = `${ano}-${mes}-${dia}`;
+    }
+    
     const rota = await buscarCoordenadasPorTurmaEData(id_turma, data_viagem)
 
     if(rota == null){
         return
-    } 
+    }
     
     setOrigem(rota.origem)
     
