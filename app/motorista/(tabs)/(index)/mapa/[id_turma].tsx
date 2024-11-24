@@ -119,7 +119,7 @@ export default function Mapa() {
                 >
                     <TextInput
                         style={estilo.input}
-                        placeholder="Nome"
+                        placeholder="Data"
                         value={data}
                         onChangeText={setData}
                     />
